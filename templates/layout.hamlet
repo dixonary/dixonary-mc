@@ -11,7 +11,8 @@
         
     <body>
         <header>
-            <p.name>Dixonary
+            <a href="/">
+                <p.name>Dixonary
             <.row>
                 <a href="/blog">blog
                 <a href="/games">games

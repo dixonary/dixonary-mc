@@ -30,6 +30,7 @@ header a:not(first-child) { margin-left:0.5rem; }
 
 header a {
     color:white;
+    text-decoration:unset !important;
 }
 
 p.name {
