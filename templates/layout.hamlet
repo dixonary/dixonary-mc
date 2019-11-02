@@ -11,7 +11,8 @@
         <header>
             <p.name>Dixonary
             <.row>
-                <a href="/blog">Blog
-                <a href="/games">Games
+                <a href="/blog">blog
+                <a href="/games">games
+                <a href="/mc">mc
         <main>
             #{pageBody}

@@ -19,6 +19,10 @@ Here's the list of features:
 
 * The distribution is a single, portable binary.
 
+* Despite doing quite a lot of stuff for you, it's speedy. It's built on top of the Yesod web framework and the Warp webserver, both of which are well optimised.
+
+* Zero frontend load - the site is a "normal" website - no hefty frontend frameworks. When rendering my blog, a page weighs about 70kB - 64kB of which is the header font.
+
 ***
 
 ## How to use
@@ -73,3 +77,11 @@ and the title and date will be appropriately reflected on posts and in directory
 * The system is not optimized for performance, although laziness should help avoid the worst excesses. It should only read the preamble of posts in order to get the titles, for example.
 
 * Some errors show up when reading in filetypes for which pandoc only has recent support; eg. `.odt` files should be readable but seem to throw errors. Markdown is still the first-class filetype for posts.
+
+***
+
+## Future work
+
+* **Online editing** is a maybe. It seems out of the scope of `mc` so I might leave that as an exercise to the reader.
+
+* **Preview / Draft mode** so that pages automatically update when updated, and maybe don't show up in directory listings.
