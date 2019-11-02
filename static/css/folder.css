@@ -1,0 +1,17 @@
+h1 {
+  margin-bottom:2rem;
+}
+
+.dir, .post {
+    display:block;
+    width:100%;
+    border:1px solid #abcdef;
+    border-radius:3px;
+    padding:0.5rem;
+    margin-bottom:0.5rem;
+    box-sizing: border-box;
+}
+
+.dir {
+    background-color:#e2edf9;
+}

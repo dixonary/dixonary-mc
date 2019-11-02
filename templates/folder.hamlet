@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/static/css/folder.css">
+
 <h1> #{dirname}
 
 <a href=".">

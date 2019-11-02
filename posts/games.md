@@ -1,0 +1,44 @@
+---------------
+title: Games
+---------------
+
+##"Proper" stuff
+
+###Tim In Time ([link](/games/tim))
+
+
+A short (10 minute) platforming-adventure game where you, Tim, retrieve your lost furniture from the past... and the future!
+
+My intention here was to make something that was both *finished* and *funny*. In that sense I succeeded on both fronts - it's a story based game with a conclusion, kinda... and it got [favourable reviews](http://ludumdare.com/compo/ludum-dare-37/?action=preview&uid=3304) from Ludum Dare, landing #18 in the Humour category and #90 overall!
+
+###Cel ([link](/games/cel))
+
+Cel is a puzzle game where you clear levels by popping "cels" in a chain.
+
+Cel is another Ludum Dare entry, this time for LD33 in August of 2015. The initial idea was a riff on an old puzzle game which was part of an MMO way back in the past. However the [feedback](http://ludumdare.com/compo/ludum-dare-33/?action=preview&uid=3304) I received was that the tutorial was way more fun than the game itself, so I have been working on extending the tutorial into a full set of puzzle levels.
+
+###Glide ([google play link](https://play.google.com/store/apps/details?id=co.uk.dixonary.glide_free))
+
+Glide is a Physics-puzzle game where you control when gravity is on and off. You have to use gravitation and inertia to get the red orb to the end of the level, using the environment and avoiding the pitfalls. 
+
+The original version of Glide was finished during Ludum Dare 28 back in December 2013. I mentioned at the time, that I was going to port it to Android if people liked it. As it turns out it got [pretty good ratings](http://ludumdare.com/compo/ludum-dare-28/?action=preview&uid=3304), at top 40 in Innovation and top 120 overall, out of 2000+ entries! Over a year later I finished the Haxe port for the game and it is now available on the [Google Play store](https://play.google.com/store/apps/details?id=co.uk.dixonary.glide_free).
+ 
+***
+
+##Other stuff
+
+###The *For Beginners* Series
+I made these games as a challenge to see how much I could do in an hour - any downtime hour where I feel like making something. It's now something of a tradition.
+
+The common themes are:
+
+* No two games have the same control scheme.
+* The game has *one* goal which is described on the front screen.
+* There is a timer counting down (MAXIMUM one minute)
+* No two games have the same screen size.
+
+<a href="/games/for-beginners/potionmaking">Potionmaking For Beginners</a>
+
+<a href="/games/for-beginners/worldbuilding">Worldbuilding For Beginners</a>
+
+<a href="/games/for-beginners/semaphore">Sema Phore Beginners</a>
