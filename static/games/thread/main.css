@@ -1,0 +1,67 @@
+html, body {
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+header, .preamble {
+    display:none;
+}
+
+body {
+    background: linear-gradient(to right, #b24592, #c7596d);
+}
+
+#cursor {
+    display:block;
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+#needle, #needle-top {
+    width:0.5em;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    filter:drop-shadow(0.15rem 0.25rem 0.15rem #333);
+    transition: top 1s cubic-bezier(0.55, 0.085, 0.68, 0.53), 
+                transform 1s linear;
+}
+#needle-top {
+    z-index:100;
+}
+#needle.fall-left, #needle-top.fall-left {
+    top:150%;
+    transform: rotate(25deg);
+}
+#needle.fall-right, #needle-top.fall-right {
+    top:150%;
+    transform: rotate(-25deg);
+}
+
+#name {
+    position:absolute;
+    left:50%;
+    top:1em;
+    transform:translateX(-50%);
+    margin:0;
+    padding:0;
+    font-family: 'Mixolydian', sans-serif;
+    font-size:2.5rem;
+    letter-spacing: 0.05em;
+    color: #ededed;
+    text-shadow: 0.15rem 0.25rem 0.15rem #333;
+}
+
+
+@font-face {
+    font-family: 'Mixolydian';
+    src: url("/static/games/thread/mixolydian-lt.ttf");
+}
+
+* {
+    user-select:none;
+    cursor: url('/static/games/thread/transparent.png'), default;
+}
