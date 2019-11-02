@@ -1,0 +1,102 @@
+<!--A small JavaScript grammar based generator-->
+<h1>A JS text generator</h1>
+<p>I do a bit of stuff with text generators from time to time. To help with this I wrote a short<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> JavaScript engine which can take a grammar and generate a random valid string in that language.</p>
+<h1>How it works</h1>
+<p>A <em>grammar</em> in formal terms may look something like this<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>: <img src="/images/lua_expr.png" class="native" /></p>
+<p>Grammars are used in compilers (parsers in particular) to work out whether a given piece of code is valid, and what each of the symbols means. You may notice that the example given in the <a href="#Testbed"><strong>Testbed</strong></a> section of this page looks similar in structure. Each line of the grammar is called a <em>production rule</em> - it shows how the left hand side can be converted to the right-hand side. The symbols of the language are on the left hand side of the production rules. One symbol is called the start symbol, and it is conventionally defined in the top rule. A <em>terminal</em> is something on the right which doesn't appear on the left. In this case <code>Number</code>, <code>String</code>, <code>false</code> and <code>'...'</code> are terminals. A <em>non-terminal</em> is something on the right which is itself a symbol. <code>exp</code> and <code>prefixexp</code> are non-terminals here.</p>
+<p>In a grammar, you can define a symbol multiple times. <code>exp</code> is redefined on almost every line of the grammar above. This represents <em>nondeterminism</em>. In fact this means all the definitions hold at once, and anything which fits the format of the RHS can be called an expression. Some of the production rules have the pipe symbol | on the right; this is exactly the same thing. You can determine whether some text is valid within some language by checking if there is any path of evaluation which can take you from the top of the tree, to the given text.</p>
+<p>For example, a valid evaluation (parse tree) for the expression <code>(1000)</code> might look like this:</p>
+<p><img src="/images/expr.png" class="half" /></p>
+<p>Here a parser would evaluate <code>(1000)</code>, find the parse tree above and determine that it is, in fact, a valid expression. Our job is to do the opposite - to start at the top and pick a parse tree completely at random.</p>
+<p>Usage of the grammar is as follows:</p>
+<ol>
+<li>You define the <strong>symbols</strong>, <strong>terminals</strong> and <strong>non-terminals</strong> of the grammar.</li>
+<li>You call <code>generate(top)</code> where <code>top</code> is your &quot;top level&quot; text.</li>
+<li>The generator will return a generate the result of a random parse tree.</li>
+</ol>
+<p>In fact, the grammar defines a degenerate Markov matrix, which is then used to evaluate the grammar depth-first. This is the same thing used in Markov Chain generators, except the probabilities are uniform across all options rather than being weighted by a given corpus of text.</p>
+<p><a name="testbed"></a></p>
+<h1>Testbed / Example</h1>
+<p>You can edit or replace this grammar in the editable text box below:</p>
+<p><br></p>
+<textarea rows="15" id="grammar" class="code block" style="overflow:auto;">
+grammar.main    = "@left : '@right'";           // I use "main" as the root node. Up to you.
+
+grammar.left    = ["@option1", "@option2"];   // Branching! Use an array to specify options.
+grammar.option1 = "Derek";
+grammar.option2 = "Dave";
+
+grammar.right   = ["@right No... @tomato!", "@tomato."]; // You can have loops! @right is self referential.
+grammar.tomato  = "I am % @fruit";           // Helper for generating indefinite article (a/an).
+grammar.fruit   = ["apple", "tomato"];       // The article will be correct either way.
+
+</textarea>
+<p><br></p>
+Press this button to generate a random sentence with the grammar:
+<button onclick="gen()">Generate</button>
+<div id="result">
+</div>
+<h1>Limitations</h1>
+<p>There aren't currently any ways to hook into the parsing, for instance if you wanted to add your own symbols. I used # in <a href="/dw">Doctor Who Mad Libs</a> to identify input fields and fill them in. You can check the source code of that page if you want to find out how that works, but the code for the generator is much messier than the tidy code presented here.</p>
+<p>It also can't do anything clever like use the relevant pronouns when referring to a particular character. It seems like a very complex problem which would be easier to solve on a case-by-case basis. I recommend using &quot;their&quot; instead of bothering<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>.</p>
+<h1>The Code</h1>
+<textarea readonly id="code" class="code block" rows="23">
+var maxDepth = 100; // Maximum number of replacements before giving up.
+var grammar = [];
+var lib;
+
+// Look up an element in the story segments table.
+function seg(g, name, p1) {
+    if     (typeof(g[p1]) == "undefined") return "@" + p1;
+    else if(typeof(g[p1]) == "string")    return g[p1];
+    else                                  return pick(g[p1]);
+}
+
+// Helper functions for array selection and indefinite article.
+var pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+var article = (m, o) => ("aeiouAEIOU".indexOf(m[2]) == -1?"a ":"an ") + m[2];
+
+// The heavy lifting!
+function generate(txt, g=grammar) {
+    var i = 0; //max depth of 100; avoid infinite loops!
+    while(txt.indexOf("@")>=0&&i++<maxDepth) txt = txt.replace(/@([a-zA-Z0-9]+)/g, seg.bind(this,g));
+    if(i>=maxDepth) txt += "<p style='color:red;'>[Hit maximum iteration depth ("+maxDepth+")]</p>";
+    txt=txt.replace(/\%\s[a-zA-Z]/g, article); 
+    return txt;
+}
+</textarea>
+<p>Yep, that's the whole thing. Please put @dixonary somewhere (attribution) if you end up using it, or a modified version of it, in one of your projects. Other than that, go nuts!</p>
+<p>Oh, and below is the code for the &quot;generate&quot; button in the Testbed section of this page.</p>
+<p><br></p>
+<textarea readonly id="gencode" class="code block" rows="6">
+function gen() {
+    grammar = [];
+    eval($("#grammar").val());
+    txt = generate("@main");                                   //<---THE IMPORTANT BIT!
+    $("#result").html("<div class='block'>"+txt+"</div>");
+}
+</textarea>
+<style>
+.code {
+    width:100%;
+    resize:none;
+    overflow:hidden;
+    border:none;
+    height:auto;
+    background-color:#eee;
+    border:2px solid #ddd;
+    outline:none;
+}
+</style>
+<script>
+eval($("#code").val());
+eval($("#gencode").val());
+</script>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>23 lines!<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>This is the part of the Lua language definition, in particular defining an Expression.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><a href="https://www.youtube.com/watch?v=46ehrFk-gLk">Link to why</a><a href="#fnref3">↩</a></p></li>
+</ol>
+</div>
