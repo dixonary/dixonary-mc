@@ -53,16 +53,14 @@ Dotfiles are ignored and will not be rendered by `mc`.
 
 You can provide limited metadata about your content in a preamble. Start a post with a hyphen-fenced block:
 
-```
-------------
-title: Microcosmos - a Tiny Blog
-date: 2019-11-02 10:00
-------------
+    ------------
+    title: Microcosmos - a Tiny Blog
+    date: 2019-11-02 10:00
+    ------------
 
-## About
+    ## About
 
-Microcosmos is a ...
-```
+    Microcosmos is a ...
 
 and the title and date will be appropriately reflected on posts and in directory listings. Without a preamble, the post will use the filename as the title, and the file's modified time as the post date.
 

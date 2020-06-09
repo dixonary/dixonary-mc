@@ -13,7 +13,8 @@ This is built with my handy [grammar based text generator](/textgen). Check it o
 Also suggest more "junk" and "rat" synonyms at me.
 <br><br>
 
-<textarea readonly id="grammar" class="code block" rows="14">
+~~~ {.code .block #grammar}
+var grammar = {};
 grammar.main = "@junk@rat";
 
 grammar.junk = ["Junk", "Trash", "Rubbish", "Garbage", "Debris", 
@@ -21,10 +22,9 @@ grammar.junk = ["Junk", "Trash", "Rubbish", "Garbage", "Debris",
 
 grammar.rat  = ["Vermin", "Rat", "Rodent", "Vermin", "Wretch", 
                 "Vole", "Hamster", "Gerbil", "Gopher"];
-</textarea>
-<br>
+~~~
 
-<textarea readonly id="code" class="code block" rows="23">
+~~~ {.code .block #generator}
 var maxDepth = 100; // Maximum number of replacements before giving up.
 var grammar = [];
 var lib;
@@ -48,17 +48,15 @@ function generate(txt, g=grammar) {
     txt=txt.replace(/\%\s[a-zA-Z]/g, article); 
     return txt;
 }
-</textarea>
-<br>
+~~~
 
-<textarea readonly id="gencode" class="code block" rows="6">
+~~~ {.code .block #gencode}
 function gen() {
-    grammar = [];
-    eval(document.querySelector("#grammar").value);
-    txt = generate("@main");                                   //<---THE IMPORTANT BIT!
+    eval(document.querySelector("#grammar").textContent);
+    txt = generate("@main", grammar);       //<---THE IMPORTANT BIT!
     document.querySelector("#result").innerHTML = "<div class='block'>"+txt+"</div>";
 }
-</textarea>
+~~~
 
 [^short]: 23 lines!
 [^lua]: This is the part of the Lua language definition, in particular defining an Expression.
@@ -68,16 +66,17 @@ function gen() {
 .code {
     width:100%;
     resize:none;
-    overflow:hidden;
     border:none;
     height:auto;
-    background-color:#eee;
     border:2px solid #ddd;
     outline:none;
+}
+pre {
+    overflow-x: auto;
 }
 </style>
 
 <script>
-eval(document.querySelector("#code").value);
-eval(document.querySelector("#gencode").value);
+eval(document.querySelector("#generator").textContent);
+eval(document.querySelector("#gencode").textContent);
 </script>

@@ -44,7 +44,7 @@ function markAll(questions, qn, answerfield) {
         total += mark(i, questions[i], answers[i], qn);
     }
     answerfield.innerHTML = "Total: " + total;
-    answerfield.data("total", total);
+    answerfield.setAttribute("data-total", total);
 
     var all = document.querySelectorAll(".mark");
     console.log(all);
@@ -65,7 +65,7 @@ function markAll(questions, qn, answerfield) {
 function construct(questions, qn) {
     let newRound = document.createElement('div');
     newRound.id = ""+qn;
-    document.querySelector("content").appendChild(newRound);
+    document.querySelector(".content").appendChild(newRound);
     for(var i=0; i<questions.length; i++) {
         questions[i].hash = btoa(questions[i].question).replace(/[\+=/]/g,'');
         let newQ = document.createElement('div');
@@ -80,7 +80,6 @@ function construct(questions, qn) {
     newMark.innerHTML = `<button onclick="markAll(${qn}, '${qn}', document.querySelector('#${qn} .mark'))">Mark!</button><div class="mark"></div>`
     newRound.appendChild(newMark);
 }
-
 </script>
 
 <style>
@@ -93,32 +92,37 @@ box-sizing:border-box;
     margin-top:1em;
 background-color:white;
 }
+h2 {
+    margin-top:4rem;
+}
 .flexr {
     display:flex;
+    flex-direction:row;
     position:relative;
     width:100%;
-    flex-direction:row;
-}
-.flexr p {
-    top:50%;
-    position:relative;
-    transform:translate(0,-50%);
-    padding:0 2px;
+    align-items:center;
 }
 .flexr>div {
     display:flex;
     flex-direction:column;
 }
-.questiond {
+.flexr div.question {
     flex-grow:1;
+    flex-basis: 0;
+    margin-right:1rem;
+}
+.flexr div, .flexr p {
+    margin-top:0;
 }
 .number {
     font-size:2em;
-    margin:0.5em;
+    display:inline-block;
+    margin:0.5em !important;
     vertical-align:baseline;
     width:1em;
+    flex-shrink:0;
 }
-#content .left {
+.content .left {
     text-align:left;
 }
 input {
@@ -138,8 +142,11 @@ button {
     text-align:center;
     font-size:1.5em;
 }
-#content img {
-    width:50% !important;
+.content img {
+    width: 20em !important;
+    max-width: 50vw;
+    height: 10em !important;
+    object-fit: cover;
 }
 #totalmark {
     font-size:3em;
@@ -149,8 +156,8 @@ button {
 </style>
 
 
-<br>
-##Round 1 - HISTORY
+## Round 1 - HISTORY
+
 <script>
 var qr1 = 
 [
@@ -220,11 +227,8 @@ style:"minimum"
 construct(qr1, "qr1");
 </script>
 
+## Round 2 - POPULAR GAMES
 
-
-
-<br><br><br><br>
-##Round 2 - POPULAR GAMES
 <script>
 var qr2 = 
 [
@@ -292,10 +296,8 @@ style:"minimum"
 construct(qr2,"qr2");
 </script>
 
+## Round 3 - CONSOLE GAMING
 
-
-<br><br><br><br>
-##Round 3 - CONSOLE GAMING
 <script>
 var qr3 = 
 [
@@ -363,11 +365,8 @@ style:"minimum"
 construct(qr3,"qr3");
 </script>
 
+## Round 4 - GENERAL KNOWLEDGE
 
-
-
-<br><br><br><br>
-##Round 4 - GENERAL KNOWLEDGE
 <script>
 var qr4 = 
 [
@@ -378,7 +377,7 @@ value: 1,
 style:"minimum"
 },
 {
-question: "Music round! Name the game. Bonus point if you can name the location in-game where the music plays.<br><audio controls><source src='/s/musq1.mp3' type='audio/mpeg'></audio>",
+question: "Music round! Name the game. Bonus point if you can name the location in-game where the music plays.<br><audio controls><source src='https://dixonary.co.uk:3000/s/musq1.mp3' type='audio/mpeg'></audio>",
 answer: [/breathofthewild/, /stable/],
 value: 1,
 style:"each"
@@ -390,7 +389,7 @@ value: 1,
 style:"each"
 },
 {
-question: "Music question 2! Name that game.<br><audio controls><source src='/s/musq2.mp3' type='audio/mpeg'></audio>",
+question: "Music question 2! Name that game.<br><audio controls><source src='https://dixonary.co.uk:3000/s/musq2.mp3' type='audio/mpeg'></audio>",
 answer: [/hexagon/],
 value: 1,
 style:"minimum"
@@ -402,7 +401,7 @@ value: 1,
 style:"minimum"
 },
 {
-question: "Music question 3! Name that game.<br><audio controls><source src='/s/musq3.mp3' type='audio/mpeg'></audio>",
+question: "Music question 3! Name that game.<br><audio controls><source src='https://dixonary.co.uk:3000/s/musq3.mp3' type='audio/mpeg'></audio>",
 answer: [/glide/],
 value: 1,
 style:"minimum"
@@ -414,7 +413,7 @@ value: 1,
 style:"minimum"
 },
 {
-question: "Last music question! Name that game.<br><audio controls><source src='/s/musq4.mp3' type='audio/mpeg'></audio>",
+question: "Last music question! Name that game.<br><audio controls><source src='https://dixonary.co.uk:3000/s/musq4.mp3' type='audio/mpeg'></audio>",
 answer: [/doom/],
 value: 1,
 style:"minimum"
@@ -435,11 +434,8 @@ style:"minimum"
 construct(qr4,"qr4");
 </script>
 
+## Round 5 - PICTURE ROUND
 
-
-
-<br><br><br><br>
-##Round 5 - PICTURE ROUND
 <br>
 In this round, the scoring is as follows:  
 **ONE POINTS** for naming the exact game pictured.  
@@ -452,61 +448,61 @@ In this round, the scoring is as follows:
 var qr5 = 
 [
 {
-question: "<img src='/images/quiz/1.png' />",
+question: "<img src='/static/images/quiz/1.png' />",
 answer: [/yoshis?wooll?yworld/, /yoshi/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/2.png' />",
+question: "<img src='/static/images/quiz/2.png' />",
 answer: [/(gta|grandtheftauto)(4|four|iv)/, /gta|grandtheftauto/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/3.png' />",
+question: "<img src='/static/images/quiz/3.png' />",
 answer: [/monumentvalley(2|two|ii)/, /monumentvalley/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/4.png' />",
+question: "<img src='/static/images/quiz/4.png' />",
 answer: [/(cod|callofduty)(4|modernwarfare)/, /cod|callofduty/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/5.png' />",
+question: "<img src='/static/images/quiz/5.png' />",
 answer: [/bubblebobble/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/6.png' />",
+question: "<img src='/static/images/quiz/6.png' />",
 answer: [/monopoly/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/7.png' />",
+question: "<img src='/static/images/quiz/7.png' />",
 answer: [/spelunky/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/8.png' />",
+question: "<img src='/static/images/quiz/8.png' />",
 answer: [/^n\+\+$/,/^n/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/9.png' />",
+question: "<img src='/static/images/quiz/9.png' />",
 answer: [/smash(.*)brawl/, /smash/],
 value: [1,0.5],
 style:"first"
 },
 {
-question: "<img src='/images/quiz/10.png' />",
+question: "<img src='/static/images/quiz/10.png' />",
 answer: [/spyrothedragon|^spyro$/, /spyro/],
 value: [1,0.5],
 style:"first"
@@ -519,6 +515,5 @@ construct(qr5,"qr5");
 
 The best possible mark is 57, including all the bonus points. Please do let me know how you get on!
 
-Oh, and if you want the actual answers, you can see them [here](/s/QuizAs.html).
-<br><br><br><br>
+<!-- Oh, and if you want the actual answers, you can see them [here](/static/QuizAs.html). -->
 
